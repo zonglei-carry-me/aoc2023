@@ -69,7 +69,7 @@ int main()
                 st[iter].insert({nr,nc});
             }
         }
-        if(iter<20|| iter<100 && iter%10==0 || iter%100==0) {
+        if(iter<20|| iter<100 && iter%10==0 || iter%100==0||iter%100==1) {
             printf("<iter=%d, %d, delta=%d>\n",iter,sz(st[iter]), sz(st[iter])-sz(st[iter-1]) );
         }
     }
