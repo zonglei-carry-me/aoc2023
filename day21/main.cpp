@@ -75,23 +75,27 @@ int main()
     
     printf("<%d %d %d>\n",rs,cs,cnt);
 
-    //int n_step=26501365;
-    int n_step=9;
+    int n_step=26501365;
+    //int n_step=15;
     map<pair<int,int>, pair<int,int>> mat_st;
     pair<int,int> dd[4]={{1,1},{1,-1},{-1,1},{-1,-1}};
     for(int i=0;i<4;i++){
         for(int delta=0;delta<=n_step;delta++){
             auto r= src_r+delta * dd[i].first;
             auto c= src_c+(n_step-delta) *dd[i].second;
-            printf("<<<%d,%d>>>\n",r,c);
+
             int rr=(r%rs+rs)%rs;
             int cc=(c%cs+cs)%cs;
-            if(rr==rs && cc==0 ) continue;
-            if(rr==-rs && cc==0 ) continue;
-            if(rr==0 && cc==rs ) continue;
-            if(rr==0 && cc==-rs ) continue;
-            mat_st[{div2(r,rs),div2(c,cs)}]= {rr,cc};
+            int gr=div2(r,rs);
+            int gc=div2(c,cs);
+            //printf("<<<%d,%d----%d %d-- %d %d>>>\n",r,c,gr,gc,rr,cc);
+            if(rr==0 && cc==0 ) continue;
+            if(rr==rs-1 && cc==rs-1 ) continue;
+            if(rr==rs-1 && cc==0 ) continue;
+            if(rr==0 && cc==rs-1 ) continue;
+            mat_st[{gr,gc}]= {rr,cc};
         }
+        printf("\n");
     }
 
     printf("%d\n",sz(mat_st));
@@ -121,21 +125,26 @@ int main()
     long sum1=0;
     for(auto s: stat) {
         printf("<%d %d, %d; %d>\n",get<0>(s.first),get<1>(s.first),get<2>(s.first), s.second);
-        sum1+= solve(get<0>(s.first), get<1>(s.first), get<2>(s.first)) *s.second;
+        long tmp=solve(get<0>(s.first), get<1>(s.first), get<2>(s.first));
+        sum1+=  tmp*s.second;
+        printf("%ld\n",tmp);
     }
 
 
     //long radius=n_step+1;
     long r2 = (n_step+1)/rs;
     
-    long full_cnt=  r2*r2 +(r2-1)*(r2-1);
-    if(r2==0) full_cnt=0;
+    long full_cnt1=  r2*r2 ;
+    long full_cnt2= (r2-1)*(r2-1);
+    if(r2<1) full_cnt2=0;
+    
 
-    printf("full_cnt=%ld\n", full_cnt);
+    //printf("full_cnt=%ld\n", full_cnt);
 
-    long sum2= solve(src_r, src_c, 2*rs) *full_cnt;
+    long sum2= solve(src_r, src_c, 2*rs + n_step%1+1) *full_cnt1;
+    long sum3= solve(src_r, src_c, 2*rs + n_step%1) *full_cnt2;
 
-    printf("%ld %ld %ld\n",sum1,sum2,sum1+sum2);
+    printf("%ld %ld %ld %ld\n",sum1,sum2,sum3,sum1+sum2+sum3);
      
 
 
