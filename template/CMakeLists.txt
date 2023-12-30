@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.15)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_FLAGS "-O2 -g -fsanitize=address")
+set(CMAKE_CXX_FLAGS "-O2 -g -fsanitize=address ")
 #set(CMAKE_CXX_FLAGS "-O2 -g ")
 include_directories(include /usr/local/include/)
 project(a.out LANGUAGES CXX)
-add_executable(a.out main.cpp)
 
+add_executable(a.out main.cpp)
+target_link_libraries(a.out PRIVATE "-Wl,-stack_size -Wl,3f00000")
