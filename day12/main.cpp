@@ -19,11 +19,38 @@ bool verify(){
     return true;
 }
 string cl=".#";
+bool possible(string s){
+    char pre='.';
+    int cnt=0;
+    for(int i=0;i<sz(s);i++){
+        if(s[i]=='#'){
+            if(pre!='#'){
+                cnt++;
+            }
+        } 
+        else if (s[i]=='?'){
+            if(pre=='#'){
+                s[i]='.';
+            }
+            else{
+                s[i]='#';
+                cnt++;
+            }
+        }
+
+        pre=s[i];
+    }
+    if(cnt<v.size()) return false;
+    return true;
+}
 void dfs(int idx, int group,int running_len){
     //printf("<%d %d %d; %s>\n",idx,group,running_len, s.c_str());
     //auto ss=split_c(s,".");
     //if(ss.size()<v.size()) return;
     //verify();
+    if(!possible(s)){
+        return;
+    }
     if(idx==size(s)){
         if(running_len==0){
             if(group!=v.size()) return;
