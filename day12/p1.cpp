@@ -19,7 +19,7 @@ bool verify(){
     return true;
 }
 void dfs(int idx){
-    if(idx==size(s)){
+    if(idx==sz(s)){
         if(verify()) cnt++;
         return;
     }

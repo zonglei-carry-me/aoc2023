@@ -29,7 +29,7 @@ bool verify(){
 }
 
 void dfs(int idx){
-    if(idx==size(s)){
+    if(idx==sz(s)){
         if(verify()) cnt_native++;
         return;
     }
