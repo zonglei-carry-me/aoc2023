@@ -44,7 +44,7 @@ struct WorkFlow{
 
     void add_rules(Rule & rule){
         for(int i=0;i<sz(rules);i++) {
-            if(rules[i].covers(rule)) return;
+            //if(rules[i].covers(rule)) return;
         }
         rules.push_back(rule);
     }
@@ -59,7 +59,7 @@ struct WorkFlow{
         }
     }
 };
-map<string, WorkFlow> wfs;
+unordered_map<string, WorkFlow> wfs;
 vector<Item>items;
 
 bool solve(Item & item){
@@ -69,10 +69,10 @@ bool solve(Item & item){
     while(1){
         //printf("next=%s ", next.c_str());
         if(next=="A"){
-            long sum=0;
+            /*long sum=0;
             for(auto &pr: item.attr){
                 sum+=pr.second;
-            }
+            }*/
             //printf("%d  %ld\n", item.idx,sum);
             //ans+=sum;
             //break;
@@ -170,6 +170,7 @@ int main()
             //printf("<<%f>>",*it2);
             if(it2==st.begin()) continue;
             printf("<%f %f>\n", prev,*it2);
+            assert(*it2 -prev >0.1);
             intervals[i].push_back({prev,*it2});
             prev=*it2;
         }
@@ -193,12 +194,12 @@ int main()
     for(auto &i3:intervals[3])
     {
        
-        long size= long(i0.second-i0.first+0.49)*long(i1.second-i1.first+0.49)*long(i2.second-i2.first+0.49)*long(i3.second-i3.first+0.49);
+        long size= long(i0.second-i0.first+0.1)*long(i1.second-i1.first+0.1)*long(i2.second-i2.first+0.1)*long(i3.second-i3.first+0.1);
         assert(size!=0);
-        item.attr['x']= i0.first+0.51;
-        item.attr['m']= i1.first+0.51;
-        item.attr['a']= i2.first+0.51;
-        item.attr['s']= i3.first+0.51;
+        item.attr['x']= i0.first+0.6;
+        item.attr['m']= i1.first+0.6;
+        item.attr['a']= i2.first+0.6;
+        item.attr['s']= i3.first+0.6;
         if(solve(item)) ans+=size;
         cases++;
         if(cases%10000000==0) printf("current=%ld\n",cases);
